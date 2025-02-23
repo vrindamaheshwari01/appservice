@@ -1,13 +1,14 @@
-const express = require("express")
+const express = require("express");
 
-const app = express()
+const app = express();
 
+app.get("/", (req, res) => {
+    res.json({ "msg": "Deploying the application" });
+});
 
-app.get("/",(req,res)=>{
-    res.json({"msg":"deploying the application"})
-})
+// Use process.env.PORT or default to 8001 (for local testing)
+const PORT = process.env.PORT || 8001; 
 
-
-app.listen(8001,()=>{
-    console.log("Listening to port 8001")
-})
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+});
