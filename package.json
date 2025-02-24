@@ -10,8 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.2",
-    "@azure/identity": "^2.6.0",
-    "@azure/keyvault-secrets": "^4.5.0"
+    "express": "",
+    "@azure/identity": "",
+    "@azure/keyvault-secrets": ""
   }
 }
