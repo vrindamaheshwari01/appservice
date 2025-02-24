@@ -1,17 +1,27 @@
 const express = require("express");
+const { DefaultAzureCredential } = require("@azure/identity");
+const { SecretClient } = require("@azure/keyvault-secrets");
 
 const app = express();
+const port = 3000;
 
-const data = process.env.NODE_ENV || "this is manual"
+// Replace with your Key Vault name
+const keyVaultName = "<your-keyvault-name>";
+const keyVaultUrl = `https://${keyVaultName}.vault.azure.net`;
 
-app.get("/", (req, res) => {
-    res.json({ "msg": `emssage from the server ${data} ` });
+const credential = new DefaultAzureCredential();
+const client = new SecretClient(keyVaultUrl, credential);
+
+app.get("/get-secret", async (req, res) => {
+    try {
+        const secret = await client.getSecret("username");
+        res.json({ username: secret.value });
+    } catch (error) {
+        console.error("Error fetching secret:", error);
+        res.status(500).json({ error: "Failed to fetch secret" });
+    }
 });
 
-// Use process.env.PORT or default to 8001 (for local testing)
-const PORT = process.env.PORT || 8001; 
-
-
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT} `);
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
 });
