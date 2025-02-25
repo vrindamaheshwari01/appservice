@@ -1,27 +1,12 @@
-const express = require("express");
-const { DefaultAzureCredential } = require("@azure/identity");
-const { SecretClient } = require("@azure/keyvault-secrets");
+const express = require("express")
 
-const app = express();
-const port = 3000;
+const app = express() 
 
-// Replace with your Key Vault name
-const keyVaultName = "<your-keyvault-name>";
-const keyVaultUrl = `https://${keyVaultName}.vault.azure.net`;
+app.get("/",(req,res)=>{
+    res.json({"msg":"Hello this message from the server"}   
+})
 
-const credential = new DefaultAzureCredential();
-const client = new SecretClient(keyVaultUrl, credential);
 
-app.get("/get-secret", async (req, res) => {
-    try {
-        const secret = await client.getSecret("username");
-        res.json({ username: secret.value });
-    } catch (error) {
-        console.error("Error fetching secret:", error);
-        res.status(500).json({ error: "Failed to fetch secret" });
-    }
-});
-
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
+app.listen(8001,()=>{
+  console.log("LIstening to port 8001") 
+})
