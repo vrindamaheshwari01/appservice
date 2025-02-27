@@ -1,12 +1,15 @@
-const express = require("express")
+const express = require("express");
 
-const app = express() 
+const app = express();
 
-app.get("/",(req,res)=>{
-    res.json({"msg":"Hello this message from the server"}) 
-})
+// Default route
+app.get("/", (req, res) => {
+  res.json({ "msg": "Hello, this message is from the server" });
+});
 
+// Use process.env.PORT to use the port Azure assigns
+const port = process.env.PORT || 8001;  // fallback to 8001 if the environment variable is not set
 
-app.listen(8001,()=>{
-  console.log("LIstening to port 8001") 
-})
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
